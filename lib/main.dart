@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -57,7 +59,6 @@ class MyAppState extends ChangeNotifier {
   }
 }
 
-// homepage body
 class MyHomePage extends StatefulWidget {
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -69,6 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     var colorScheme = Theme.of(context).colorScheme;
+
     Widget page;
     switch (selectedIndex) {
       case 0:
@@ -80,6 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
+
     // The container for the current page, with its background color
     // and subtle switching animation.
     var mainArea = ColoredBox(
@@ -172,6 +175,11 @@ class GeneratorPage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Expanded(
+            flex: 3,
+            child: HistoryListView(),
+          ),
+          SizedBox(height: 10),
           BigCard(pair: pair),
           SizedBox(height: 10),
           Row(
@@ -193,19 +201,18 @@ class GeneratorPage extends StatelessWidget {
               ),
             ],
           ),
+          Spacer(flex: 2),
         ],
       ),
     );
   }
 }
 
-// ...
-
 class BigCard extends StatelessWidget {
   const BigCard({
-    super.key,
+    Key? key,
     required this.pair,
-  });
+  }) : super(key: key);
 
   final WordPair pair;
 
@@ -255,6 +262,7 @@ class FavoritesPage extends StatelessWidget {
         child: Text('No favorites yet.'),
       );
     }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
